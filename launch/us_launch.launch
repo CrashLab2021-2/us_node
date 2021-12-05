@@ -1,0 +1,23 @@
+<launch>
+    <arg name="echo1" default="17"/>
+    <arg name="trig1" default="27"/>
+<!--    <arg name="echo2" default="17"/>
+    <arg name="trig2" default="27"/>
+    <arg name="echo3" default="17"/>
+    <arg name="trig3" default="27"/>
+    <arg name="echo4" default="17"/>
+    <arg name="trig4" default="27"/> -->
+
+	<node pkg="us_node" type="us_node" name="us_node1" ns="us1" output="screen"/>
+	    <param name="echo" value="$(arg echo1)" />
+	    <param name="trig" value="$(arg trig1)" />
+<!--	<node pkg="us_node" type="us_node" name="us_node2" ns="us2"/>
+	    <param name="echo" value="$(arg echo2)" />
+	    <param name="trig" value="$(arg trig2)" />
+	<node pkg="us_node" type="us_node" name="us_node3" ns="us3"/>
+	    <param name="echo" value="$(arg echo3)" />
+	    <param name="trig" value="$(arg trig3)" />
+	<node pkg="us_node" type="us_node" name="us_node4" ns="us4"/>
+	    <param name="echo" value="$(arg echo4)" />
+	    <param name="trig" value="$(arg trig4)" /> -->
+</launch>
