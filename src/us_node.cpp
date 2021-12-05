@@ -3,6 +3,7 @@
 
 #include <pigpiod_if2.h>
 #include <ros/ros.h>
+#include "std_msgs/Float32.h"
 
 // #define TRIG_PINNO 27
 // #define ECHO_PINNO 17
@@ -32,6 +33,10 @@ int main(int argc, char *argv[])
     ros::init(argc, argv, "us_node");
     ros::NodeHandle nh;
     
+    ros::Publisher us_pub = nh.advertise<std_msgs::Float32>("us_topic", 1);
+    
+    std_msgs::Float32 us_msg;
+    
     nh.getParam("/trig",TRIG_PINNO);
     nh.getParam("/echo",ECHO_PINNO);
     ROS_INFO("TRIG %d", TRIG_PINNO);
@@ -52,6 +57,8 @@ int main(int argc, char *argv[])
                 printf("range error\n");
             else
                 printf("interval : %6dus, Distance : %6.1f cm\n", dist_tick_, distance);
+            us_msg.data = distance;
+            us_pub.publish(us_msg);
         }
         else
             printf("sense error\n");
