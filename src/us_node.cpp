@@ -33,14 +33,17 @@ int main(int argc, char *argv[])
     ros::init(argc, argv, "us_node");
     ros::NodeHandle nh;
     
+    ECHO_PINNO = atoi(argv[1]);
+    TRIG_PINNO = atoi(argv[2]);
+    
+    //nh.getParam("/trig",TRIG_PINNO);
+    //nh.getParam("/echo",ECHO_PINNO);
+    ROS_INFO("TRIG %d", TRIG_PINNO);
+    ROS_INFO("ECHO %d", ECHO_PINNO);
+    
     ros::Publisher us_pub = nh.advertise<std_msgs::Float32>("us_topic", 1);
     
     std_msgs::Float32 us_msg;
-    
-    nh.getParam("/trig",TRIG_PINNO);
-    nh.getParam("/echo",ECHO_PINNO);
-    ROS_INFO("TRIG %d", TRIG_PINNO);
-    ROS_INFO("ECHO %d", ECHO_PINNO);
     
     us_setting();
     printf("Raspberry Pi HC-SR04 UltraSonic sensor\n" );
@@ -58,10 +61,12 @@ int main(int argc, char *argv[])
             else
                 printf("interval : %6dus, Distance : %6.1f cm\n", dist_tick_, distance);
             us_msg.data = distance;
-            us_pub.publish(us_msg);
         }
-        else
+        else{
             printf("sense error\n");
+            us_msg.data = -1;
+        }
+        us_pub.publish(us_msg);
 
         time_sleep(0.1);
     }
